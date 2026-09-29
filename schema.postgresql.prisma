@@ -1,0 +1,79 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  id             String           @id @default(cuid())
+  name           String
+  rollNo         String
+  registrationNo String           @unique
+  batch          String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  requests       PaymentRequest[]
+
+  @@index([rollNo])
+  @@index([name])
+}
+
+model PaymentRequest {
+  id              String    @id @default(cuid())
+  requestId       String    @unique
+  studentId       String
+  student         Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  amount          Float
+  utr             String    @unique
+  status          String    @default("PENDING")
+  rejectionReason String?
+  verifiedBy      String?
+  submittedAt     DateTime  @default(now())
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+
+  @@index([status])
+  @@index([submittedAt])
+}
+
+model Admin {
+  id              String    @id @default(cuid())
+  name            String
+  phone           String    @unique
+  email           String?   @unique
+  passwordHash    String?
+  isSetupComplete Boolean   @default(false)
+  role            String    @default("admin")
+  createdAt       DateTime  @default(now())
+  lastLoginAt     DateTime?
+}
+
+model EventSettings {
+  id               String   @id @default("default")
+  eventName        String   @default("Dandiya Night 2026")
+  eventDate        String   @default("October 18, 2026")
+  eventVenue       String   @default("University Central Amphitheater & Lawns")
+  eventDescription String   @default("An enchanted evening of Garba, Raas, traditional rhythm, and cultural celebration.")
+  upiId            String   @default("dandiyanight2026@upi")
+  qrCodeUrl        String?
+  adminWhatsApp    String   @default("918651879192")
+  adminDisplayName String   @default("Dandiya Organizing Committee")
+  minAmount        Float    @default(100)
+  maxAmount        Float    @default(10000)
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  adminName String
+  action    String
+  targetId  String?
+  details   String?
+  timestamp DateTime @default(now())
+
+  @@index([timestamp])
+}

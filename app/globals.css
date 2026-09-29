@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #120510;
+  --bg-secondary: #1C0B18;
+  --bg-card: rgba(35, 14, 30, 0.75);
+  --accent-gold: #D4AF37;
+  --accent-saffron: #E65C00;
+  --text-primary: #FDFBF7;
+  --text-muted: #D1C5C7;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, h3, h4, .font-cultural {
+    font-family: var(--font-cinzel), Georgia, serif;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #120510;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3D0C22;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #781D39;
+}
+
+/* Cultural Gold Border Ornament */
+.gold-border {
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 15px -3px rgba(212, 175, 55, 0.1);
+}
+
+.gold-border:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 20px -3px rgba(212, 175, 55, 0.2);
+}
+
+/* Festive Glassmorphism */
+.festive-card {
+  background: rgba(35, 14, 30, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 1rem;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
